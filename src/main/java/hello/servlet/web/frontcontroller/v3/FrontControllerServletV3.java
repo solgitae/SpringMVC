@@ -16,12 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@WebServlet(name = "frontControllerServletV3", urlPatterns = "front-controller/v3/*")
-public class FrontControllerV3 extends HttpServlet {
+@WebServlet(name = "frontControllerServletV3", urlPatterns = "/front-controller/v3/*")
+public class FrontControllerServletV3 extends HttpServlet {
 
     private Map<String, ControllerV3> controllerMap = new HashMap<>();
 
-    public FrontControllerV3() { //형식을 미리 만들어서 Map에 저장
+    public FrontControllerServletV3() { //형식을 미리 만들어서 Map에 저장
         controllerMap.put("/front-controller/v3/members/new-form", new MemberFormControllerV3());
         controllerMap.put("/front-controller/v3/members/save", new MemberSaveControllerV3());
         controllerMap.put("/front-controller/v3/members", new MemberListControllerV3());
