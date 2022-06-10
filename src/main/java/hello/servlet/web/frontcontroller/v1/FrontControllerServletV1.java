@@ -1,6 +1,6 @@
 package hello.servlet.web.frontcontroller.v1;
 
-
+import hello.servlet.web.frontcontroller.v1.controller.ControllerV1;
 import hello.servlet.web.frontcontroller.v1.controller.MemberFormControllerV1;
 import hello.servlet.web.frontcontroller.v1.controller.MemberListControllerV1;
 import hello.servlet.web.frontcontroller.v1.controller.MemberSaveControllerV1;
@@ -14,32 +14,21 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @WebServlet(name = "frontControllerServletV1", urlPatterns = "/front-controller/v1/*")
 public class FrontControllerServletV1 extends HttpServlet {
 
-    /**
-     * @Key(URI)Value(Controller)
-     */
-
     private Map<String, ControllerV1> controllerMap = new HashMap<>();
 
-
-    /**
-     *
-     * @param request   the {@link HttpServletRequest} object that
-     *                  contains the request the client made of
-     *                  the servlet
-     *
-     * @param response  the {@link HttpServletResponse} object that
-     *                  contains the response the servlet returns
-     *                  to the client
-     *
-     * @throws ServletException
-     * @throws IOException
-     */
+    public FrontControllerServletV1(){
+        controllerMap.put("/front-controller/v1/members/new-form", new MemberFormControllerV1());
+        controllerMap.put("/front-controller/v1/members/save", new MemberSaveControllerV1());
+        controllerMap.put("/front-controller/v1/members", new MemberListControllerV1());
+    }
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         System.out.println("FrontControllerServletV1.service");
         String requestURI = request.getRequestURI();
 
@@ -48,22 +37,9 @@ public class FrontControllerServletV1 extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
-
         controller.process(request, response);
+
+
+
     }
-
-
-    /**
-     * @Mapping
-     */
-
-    
-    public FrontControllerServletV1() {
-        controllerMap.put("/front-controller/v1/members/new-form", new MemberFormControllerV1());
-        controllerMap.put("/front-controller/v1/members/save", new MemberSaveControllerV1());
-        controllerMap.put("/front-controller/v1/members", new MemberListControllerV1());
-    }
-
-
-
 }

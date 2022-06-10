@@ -1,4 +1,4 @@
-package hello.servlet.web.frontcontroller.v1;
+package hello.servlet.web.frontcontroller.v1.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -7,5 +7,4 @@ import java.io.IOException;
 
 public interface ControllerV1 {
     void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
-
 }
