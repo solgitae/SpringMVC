@@ -37,7 +37,7 @@ public class ItemRepository {
 
         findItem.setItemName(updateParam.getItemName());
         findItem.setPrice(updateParam.getPrice());
-        findItem.setQuentity(updateParam.getQuentity());
+        findItem.setQuantity(updateParam.getQuantity());
 
     }
 
