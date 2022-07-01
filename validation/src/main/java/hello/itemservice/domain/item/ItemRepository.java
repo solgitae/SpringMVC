@@ -28,10 +28,10 @@ public class ItemRepository {
     }
 
     public void update(Long itemId, Item updateParam) {
-        Item findItem = findById(itemId);
-        findItem.setItemName(updateParam.getItemName());
-        findItem.setPrice(updateParam.getPrice());
-        findItem.setQuantity(updateParam.getQuantity());
+        Item findItemSaveForm = findById(itemId);
+        findItemSaveForm.setItemName(updateParam.getItemName());
+        findItemSaveForm.setPrice(updateParam.getPrice());
+        findItemSaveForm.setQuantity(updateParam.getQuantity());
     }
 
     public void clearStore() {
