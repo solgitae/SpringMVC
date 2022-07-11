@@ -14,7 +14,7 @@ public class DBConnectionUtilTest {
 
     @Test
     void connection() {
-        Connection connection = DBConnectionUtil.getConnection();
+        Connection connection = DBConnectionUtil.getConnection(); //H2 DB
         assertThat(connection).isNotNull();
     }
 }

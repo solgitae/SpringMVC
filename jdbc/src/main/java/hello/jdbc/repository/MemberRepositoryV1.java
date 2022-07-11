@@ -3,20 +3,23 @@ package hello.jdbc.repository;
 import hello.jdbc.connection.DBConnectionUtil;
 import hello.jdbc.domain.Member;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.support.JdbcUtils;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.NoSuchElementException;
 
-import static hello.jdbc.connection.DBConnectionUtil.*;
-
 @Slf4j
-public class MemberRepositoryV0 {
+public class MemberRepositoryV1 {
+    private final DataSource dataSource;
+    public MemberRepositoryV1(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
     public Member save(Member member) throws SQLException {
-        String sql = "insert into member(member_id, money) values(?, ?)";
 
+        String sql = "insert into member(member_id, money) values(?, ?)";
         Connection con = null;
         PreparedStatement pstmt = null;
-
         try {
             con = getConnection();
             pstmt = con.prepareStatement(sql);
@@ -33,27 +36,15 @@ public class MemberRepositoryV0 {
     }
 
     private void close(Connection con, Statement stmt, ResultSet rs) {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                log.info("error", e);
-            }
-        }
-        if (stmt != null) {
-            try {
-                stmt.close();
-            } catch (SQLException e) {
-                log.info("error", e);
-            }
-        }
-        if (con != null) {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                log.info("error", e);
-            }
-        }
+        JdbcUtils.closeResultSet(rs);
+        JdbcUtils.closeStatement(stmt);
+        JdbcUtils.closeConnection(con);
+    }
+
+    private Connection getConnection() throws SQLException {
+        Connection con = dataSource.getConnection();
+        log.info("get connection={}, class={}", con, con.getClass());
+        return con;
     }
 
 
@@ -128,12 +119,5 @@ public class MemberRepositoryV0 {
         } finally {
             close(con, pstmt, null);
         }
-    }
-
-
-
-
-    private Connection getConnection() {
-        return DBConnectionUtil.getConnection();
     }
 }
